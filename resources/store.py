@@ -23,7 +23,7 @@ class Store(Resource):
 	def delete(self, name):
 		store = StoreModel.find_by_name(name)
 		if store:
-			store.delete_from_fb()
+			store.delete_from_db()
 
 		return {'message': 'Store deleted'}
 
