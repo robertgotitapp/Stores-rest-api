@@ -27,7 +27,7 @@ class Item(Resource):
 			return {'message': "An item with name '{}' is already existed.".format(name)}, 400
 
 		data = Item.parser.parse_args()	
-		item = ItemModel( name, data['price'], data['store_id'])
+		item = ItemModel( name, **data)
 		try:
 			item.save_to_db()
 		except: 
@@ -51,8 +51,10 @@ class Item(Resource):
 			item = ItemModel(name, **data)
 		else:
 			item.price = data['price']
-
-		item.save_to_db()
+		try:
+			item.save_to_db()
+		except:
+			return {'message': 'An error occurred when inserting item.'}, 500
 		return item.json()
 
 
